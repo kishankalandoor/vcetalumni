@@ -102,9 +102,9 @@ if (process.env.VERCEL !== '1') {
 ╔════════════════════════════════════════════════╗
 ║   VCET Alumni Hub - Node.js Server Started     ║
 ╠════════════════════════════════════════════════╣
-║  Environment: ${process.env.NODE_ENV.padEnd(32)} ║
+║  Environment: ${(process.env.NODE_ENV || 'development').padEnd(32)} ║
 ║  Server URL:  http://${HOST}:${PORT}${' '.repeat(21 - HOST.length - PORT.toString().length)} ║
-║  Database:    ${process.env.DB_NAME.padEnd(32)} ║
+║  Database:    ${(process.env.DB_NAME || 'not set').padEnd(32)} ║
 ╚════════════════════════════════════════════════╝
         `);
     });
