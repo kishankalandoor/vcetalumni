@@ -1,0 +1,53 @@
+<% if (isLoggedIn) { %>
+<!-- Mobile Navigation -->
+<nav class="navbar navbar-light bg-white border-bottom fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/dashboard">
+            <i class="bi bi-mortarboard-fill text-primary"></i>
+            <strong>VCET Alumni Hub</strong>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Offcanvas Menu -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="mainMenu">
+    <div class="offcanvas-header bg-primary text-white">
+        <h5 class="offcanvas-title">
+            <i class="bi bi-person-circle"></i> 
+            <%= user.name %>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <div class="list-group list-group-flush">
+            <a href="/dashboard" class="list-group-item list-group-item-action">
+                <i class="bi bi-house-door me-2"></i> Dashboard
+            </a>
+            <a href="/profile/<%= user.id %>" class="list-group-item list-group-item-action">
+                <i class="bi bi-person me-2"></i> My Profile
+            </a>
+            <a href="/directory" class="list-group-item list-group-item-action">
+                <i class="bi bi-people me-2"></i> Alumni Directory
+            </a>
+            <a href="/newsfeed" class="list-group-item list-group-item-action">
+                <i class="bi bi-newspaper me-2"></i> Newsfeed
+            </a>
+            <a href="/jobs" class="list-group-item list-group-item-action">
+                <i class="bi bi-briefcase me-2"></i> Job Opportunities
+            </a>
+            <% if (user.role === 'admin') { %>
+            <a href="/admin" class="list-group-item list-group-item-action text-danger">
+                <i class="bi bi-gear me-2"></i> Admin Panel
+            </a>
+            <% } %>
+            <hr class="my-0">
+            <a href="/auth/logout" class="list-group-item list-group-item-action text-danger">
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
+<% } %>

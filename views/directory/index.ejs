@@ -1,0 +1,88 @@
+<%- include('../partials/navbar') %>
+<div class="content-wrapper">
+<%- include('../partials/flash') %>
+<div class="container-fluid p-3">
+    <div class="section-header mb-3">
+        <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i>Alumni Directory</h5>
+    </div>
+    <form method="GET" class="mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" name="search" 
+                               value="<%= filters.search || '' %>" placeholder="Search by name...">
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <select class="form-select form-select-sm" name="batch_year">
+                            <option value="">All Years</option>
+                            <% if (batchYears) batchYears.forEach(year => { %>
+                                <option value="<%= year %>" <%= filters.batch_year == year ? 'selected' : '' %>><%= year %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-select form-select-sm" name="department">
+                            <option value="">All Departments</option>
+                            <% if (departments) departments.forEach(dept => { %>
+                                <option value="<%= dept %>" <%= filters.department == dept ? 'selected' : '' %>><%= dept %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm flex-fill"><i class="bi bi-search"></i> Search</button>
+                    <a href="/directory" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-circle"></i></a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="mb-3">
+        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Found <%= alumni.length %> alumni</small>
+    </div>
+    <% if (alumni && alumni.length > 0) { %>
+        <div class="row g-3">
+            <% alumni.forEach(person => { %>
+            <div class="col-12">
+                <a href="/profile/<%= person.id %>" class="text-decoration-none">
+                    <div class="alumni-card">
+                        <div class="alumni-avatar">
+                            <% if (person.profile_picture) { %>
+                                <img src="/<%= person.profile_picture %>" alt="Profile">
+                            <% } else { %>
+                                <div class="avatar-placeholder"><%= person.name.charAt(0).toUpperCase() %></div>
+                            <% } %>
+                        </div>
+                        <div class="alumni-info">
+                            <h6 class="mb-1"><%= person.name %></h6>
+                            <% if (person.designation && person.company) { %>
+                                <p class="text-muted small mb-1"><%= person.designation %> at <%= person.company %></p>
+                            <% } %>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <% if (person.batch_year) { %>
+                                    <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> <%= person.batch_year %></span>
+                                <% } %>
+                                <% if (person.department) { %>
+                                    <span class="badge bg-light text-dark"><i class="bi bi-book"></i> <%= person.department %></span>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="alumni-arrow"><i class="bi bi-chevron-right"></i></div>
+                    </div>
+                </a>
+            </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <div class="empty-state">
+            <i class="bi bi-search"></i>
+            <p>No alumni found</p>
+        </div>
+    <% } %>
+</div>
+</div>
+<%- include('../partials/bottom-nav') %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

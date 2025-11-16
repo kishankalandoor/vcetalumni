@@ -1,0 +1,79 @@
+<%- include('../partials/navbar') %>
+<div class="content-wrapper">
+<%- include('../partials/flash') %>
+<div class="container-fluid p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0"><i class="bi bi-briefcase-fill me-2"></i>Job Opportunities</h5>
+        <% if (user.role === 'alumni' || user.role === 'admin') { %>
+            <a href="/jobs/create" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i></a>
+        <% } %>
+    </div>
+    <form method="GET" class="mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="search" value="<%= filters.search || '' %>" 
+                           placeholder="Search jobs...">
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <select class="form-select form-select-sm" name="job_type">
+                            <option value="">All Types</option>
+                            <option value="full-time" <%= filters.job_type == 'full-time' ? 'selected' : '' %>>Full-Time</option>
+                            <option value="part-time" <%= filters.job_type == 'part-time' ? 'selected' : '' %>>Part-Time</option>
+                            <option value="contract" <%= filters.job_type == 'contract' ? 'selected' : '' %>>Contract</option>
+                            <option value="internship" <%= filters.job_type == 'internship' ? 'selected' : '' %>>Internship</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control form-control-sm" name="location" 
+                               value="<%= filters.location || '' %>" placeholder="Location">
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm flex-fill"><i class="bi bi-search"></i> Search</button>
+                    <a href="/jobs" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-circle"></i></a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="mb-3">
+        <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Found <%= jobs.length %> jobs</small>
+    </div>
+    <% if (jobs && jobs.length > 0) { %>
+        <% jobs.forEach(job => { %>
+        <div class="job-card mb-3">
+            <div class="job-header">
+                <div class="job-company-logo"><i class="bi bi-building"></i></div>
+                <div class="job-info flex-fill">
+                    <h6 class="mb-1"><%= job.job_title %></h6>
+                    <p class="text-muted small mb-1"><i class="bi bi-building me-1"></i><%= job.company %></p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge bg-light text-dark"><i class="bi bi-geo-alt"></i> <%= job.location %></span>
+                        <span class="badge bg-primary"><%= job.job_type %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="job-description">
+                <p class="mb-2"><%= job.description.substring(0, 200) %>...</p>
+                <small class="text-muted">Posted by <strong><%= job.posted_by %></strong> • <%= timeAgo(job.created_at) %></small>
+            </div>
+            <div class="job-actions">
+                <% if (job.apply_link) { %>
+                    <a href="<%= job.apply_link %>" target="_blank" class="btn btn-sm btn-primary">
+                        <i class="bi bi-box-arrow-up-right me-1"></i>Apply Now
+                    </a>
+                <% } %>
+            </div>
+        </div>
+        <% }); %>
+    <% } else { %>
+        <div class="empty-state">
+            <i class="bi bi-briefcase"></i>
+            <p>No job opportunities found</p>
+        </div>
+    <% } %>
+</div>
+</div>
+<%- include('../partials/bottom-nav') %>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

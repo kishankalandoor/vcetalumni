@@ -1,0 +1,112 @@
+# ============================================
+# VCET ALUMNI HUB - RENDER ENVIRONMENT VARIABLES
+# ============================================
+# Copy these values to Render Dashboard → Environment Variables
+# or use as Secret File (.env)
+# ============================================
+
+# --------------------------------------------
+# SERVER CONFIGURATION
+# --------------------------------------------
+NODE_ENV=production
+PORT=10000
+HOST=0.0.0.0
+
+# --------------------------------------------
+# DATABASE CONFIGURATION (Get from Render MySQL)
+# --------------------------------------------
+# After creating MySQL database on Render, copy these from dashboard:
+DB_HOST=your-render-mysql-hostname.oregon-postgres.render.com
+DB_USER=your_mysql_username
+DB_PASSWORD=your_mysql_password
+DB_NAME=vcet_alumni_hub
+DB_PORT=3306
+DB_CONNECTION_LIMIT=10
+
+# Alternative: Use single DATABASE_URL (if provided)
+# DATABASE_URL=mysql://username:password@host:port/database
+
+# --------------------------------------------
+# SESSION CONFIGURATION
+# --------------------------------------------
+# Generate random string (min 32 characters) - Click "Generate Value" on Render
+SESSION_SECRET=your-super-secret-session-key-change-this-to-random-string-min-32-chars
+SESSION_MAX_AGE=86400000
+
+# --------------------------------------------
+# JWT CONFIGURATION
+# --------------------------------------------
+# Generate random string (min 32 characters) - Click "Generate Value" on Render
+JWT_SECRET=your-jwt-secret-key-change-this-to-random-string-min-32-chars
+JWT_EXPIRES_IN=7d
+
+# --------------------------------------------
+# APPLICATION CONFIGURATION
+# --------------------------------------------
+APP_NAME=VCET Alumni Hub
+APP_VERSION=1.0.0
+# Update this with your actual Render URL after deployment
+BASE_URL=https://your-app-name.onrender.com
+
+# --------------------------------------------
+# FILE UPLOAD CONFIGURATION
+# --------------------------------------------
+MAX_FILE_SIZE=5242880
+ALLOWED_EXTENSIONS=jpg,jpeg,png
+UPLOAD_DIR=/opt/render/project/src/uploads
+
+# --------------------------------------------
+# SECURITY CONFIGURATION
+# --------------------------------------------
+BCRYPT_ROUNDS=10
+
+# --------------------------------------------
+# OPTIONAL: EMAIL CONFIGURATION (for forgot password)
+# --------------------------------------------
+# Uncomment and configure if you want email functionality
+# SMTP_HOST=smtp.gmail.com
+# SMTP_PORT=587
+# SMTP_SECURE=false
+# SMTP_USER=your-email@gmail.com
+# SMTP_PASS=your-app-specific-password
+# SMTP_FROM=noreply@vcet.edu
+# SMTP_FROM_NAME=VCET Alumni Hub
+
+# --------------------------------------------
+# OPTIONAL: CLOUDINARY (for persistent file uploads)
+# --------------------------------------------
+# Sign up at https://cloudinary.com (Free: 25GB)
+# Recommended for production to avoid losing uploaded files
+# CLOUDINARY_CLOUD_NAME=your-cloud-name
+# CLOUDINARY_API_KEY=your-api-key
+# CLOUDINARY_API_SECRET=your-api-secret
+
+# --------------------------------------------
+# OPTIONAL: CORS CONFIGURATION
+# --------------------------------------------
+# CORS_ORIGIN=https://yourdomain.com
+# CORS_CREDENTIALS=true
+
+# --------------------------------------------
+# OPTIONAL: RATE LIMITING
+# --------------------------------------------
+# RATE_LIMIT_WINDOW_MS=900000
+# RATE_LIMIT_MAX_REQUESTS=100
+
+# ============================================
+# DEPLOYMENT INSTRUCTIONS:
+# ============================================
+# 
+# 1. Go to Render Dashboard: https://dashboard.render.com
+# 2. Select your web service
+# 3. Go to "Environment" tab
+# 4. Add each variable above (one by one) OR
+# 5. Use "Secret Files" section and upload this entire file as ".env"
+# 
+# IMPORTANT:
+# - Replace "your-*" placeholders with actual values
+# - Get DB credentials from Render MySQL dashboard
+# - Use "Generate Value" button for SESSION_SECRET and JWT_SECRET
+# - Update BASE_URL with your actual Render app URL
+# 
+# ============================================
