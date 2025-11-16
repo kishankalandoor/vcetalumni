@@ -31,11 +31,11 @@ app.use(cookieParser());
 
 // Session Configuration
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: parseInt(process.env.SESSION_MAX_AGE),
+        maxAge: parseInt(process.env.SESSION_MAX_AGE) || 86400000,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production'
     }
@@ -52,8 +52,8 @@ app.use((req, res, next) => {
     res.locals.info = req.flash('info');
     res.locals.user = req.session.user || null;
     res.locals.isLoggedIn = !!req.session.user;
-    res.locals.APP_NAME = process.env.APP_NAME;
-    res.locals.BASE_URL = process.env.BASE_URL;
+    res.locals.APP_NAME = process.env.APP_NAME || 'VCET Alumni Hub';
+    res.locals.BASE_URL = process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
     next();
 });
 
@@ -97,13 +97,17 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'localhost';
 
 app.listen(PORT, () => {
+    const env = (process.env.NODE_ENV || 'development').padEnd(32);
+    const dbName = (process.env.DB_NAME || 'vcet_alumni_hub').padEnd(32);
+    const urlPadding = ' '.repeat(Math.max(0, 21 - HOST.length - PORT.toString().length));
+    
     console.log(`
 ╔════════════════════════════════════════════════╗
 ║   VCET Alumni Hub - Node.js Server Started     ║
 ╠════════════════════════════════════════════════╣
-║  Environment: ${process.env.NODE_ENV.padEnd(32)} ║
-║  Server URL:  http://${HOST}:${PORT}${' '.repeat(21 - HOST.length - PORT.toString().length)} ║
-║  Database:    ${process.env.DB_NAME.padEnd(32)} ║
+║  Environment: ${env} ║
+║  Server URL:  http://${HOST}:${PORT}${urlPadding} ║
+║  Database:    ${dbName} ║
 ╚════════════════════════════════════════════════╝
     `);
 });
