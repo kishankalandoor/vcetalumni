@@ -19,15 +19,18 @@ const pool = mysql.createPool({
     keepAliveInitialDelay: 0
 });
 
-// Test connection
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('❌ Database connection failed:', err.message);
-        process.exit(1);
-    }
-    console.log('✅ Database connected successfully');
-    connection.release();
-});
+// Test connection only in non-serverless environments
+// In serverless, connection will be established on first request
+if (process.env.VERCEL !== '1') {
+    pool.getConnection((err, connection) => {
+        if (err) {
+            console.error('❌ Database connection failed:', err.message);
+            process.exit(1);
+        }
+        console.log('✅ Database connected successfully');
+        connection.release();
+    });
+}
 
 // Export promise-based pool
 module.exports = pool.promise();
