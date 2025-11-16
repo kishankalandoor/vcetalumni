@@ -207,7 +207,30 @@ Uses the same MySQL database as the PHP version:
 
 ## 🚀 Deployment
 
-### Production Checklist
+### Option 1: Vercel (Serverless) ⭐ **Easiest**
+
+**Quick Deploy**: Perfect for serverless deployment with zero configuration!
+
+1. **Prerequisites**:
+   - GitHub account
+   - Vercel account (https://vercel.com)
+   - Cloud MySQL (PlanetScale/Railway recommended)
+
+2. **One-Click Deploy**:
+   - Push code to GitHub
+   - Import to Vercel
+   - Add environment variables
+   - Deploy! ✅
+
+📖 **Full Guide**: See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md)
+
+### Option 2: Render (Cloud Hosting)
+
+Traditional cloud hosting with managed services.
+
+📖 **Full Guide**: See [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md)
+
+### Option 3: Traditional VPS/Dedicated Server
 
 1. Update .env for production:
 ```env

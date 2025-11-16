@@ -92,29 +92,31 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start Server
-const PORT = process.env.PORT || 3000;
-const HOST = process.env.HOST || 'localhost';
+// Start Server (only for non-serverless environments)
+if (process.env.VERCEL !== '1') {
+    const PORT = process.env.PORT || 3000;
+    const HOST = process.env.HOST || 'localhost';
 
-app.listen(PORT, () => {
-    console.log(`
+    app.listen(PORT, () => {
+        console.log(`
 ╔════════════════════════════════════════════════╗
 ║   VCET Alumni Hub - Node.js Server Started     ║
 ╠════════════════════════════════════════════════╣
-║  Environment: ${process.env.NODE_ENV.padEnd(32)} ║
+║  Environment: ${(process.env.NODE_ENV || 'development').padEnd(32)} ║
 ║  Server URL:  http://${HOST}:${PORT}${' '.repeat(21 - HOST.length - PORT.toString().length)} ║
-║  Database:    ${process.env.DB_NAME.padEnd(32)} ║
+║  Database:    ${(process.env.DB_NAME || 'not set').padEnd(32)} ║
 ╚════════════════════════════════════════════════╝
-    `);
-});
-
-// Graceful Shutdown
-process.on('SIGTERM', () => {
-    console.log('SIGTERM signal received: closing HTTP server');
-    db.end(() => {
-        console.log('Database pool closed');
-        process.exit(0);
+        `);
     });
-});
+
+    // Graceful Shutdown
+    process.on('SIGTERM', () => {
+        console.log('SIGTERM signal received: closing HTTP server');
+        db.end(() => {
+            console.log('Database pool closed');
+            process.exit(0);
+        });
+    });
+}
 
 module.exports = app;
