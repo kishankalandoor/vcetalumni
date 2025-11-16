@@ -40,8 +40,11 @@ npm install
 
 2. **Configure Environment**
 ```bash
-# .env file is already created
-# Update if needed: DB credentials, ports, etc.
+# Copy the example environment file
+cp .env.example .env
+
+# Update .env with your database credentials
+# See ENVIRONMENT_SETUP.md for detailed instructions
 ```
 
 3. **Import Database**
@@ -252,10 +255,11 @@ server {
 
 ## 🐛 Troubleshooting
 
-### Port already in use
+### Missing environment variables
 ```bash
-# Change PORT in .env file
-PORT=3001
+# Copy the example file and configure
+cp .env.example .env
+# Edit .env with your settings
 ```
 
 ### Database connection error
@@ -270,12 +274,20 @@ DB_PASSWORD=
 DB_NAME=vcet_alumni_hub
 ```
 
+### Port already in use
+```bash
+# Change PORT in .env file
+PORT=3001
+```
+
 ### Module not found
 ```bash
 # Reinstall dependencies
 rm -rf node_modules package-lock.json
 npm install
 ```
+
+**For detailed troubleshooting, see [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md)**
 
 ## 🔄 Migration from PHP
 
